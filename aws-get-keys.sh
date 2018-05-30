@@ -42,7 +42,7 @@ fi
 MFA_TOKEN_CODE=$1
 AWS_CLI_PROFILE=${2:-default}
 #ARN_OF_MFA=${!AWS_CLI_PROFILE}
-ARN_OF_MFA="arn:aws:iam::211161777205:mfa/mark"
+ARN_OF_MFA="arn:aws:iam::012345678901:mfa/user"
 
 echo "AWS-CLI Profile: $AWS_CLI_PROFILE"
 echo "MFA ARN: $ARN_OF_MFA"
