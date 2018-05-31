@@ -17,3 +17,5 @@ setAwsKeys() {
 }
 alias aws-keys=setAwsKeys
 alias fv='tr '\''\01'\'' '\''|'\'' < '
+alias wifi-scan='nmcli device wifi rescan'
+alias wifi-list='nmcli device wifi list'
