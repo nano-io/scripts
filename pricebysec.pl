@@ -11,7 +11,7 @@ my (%tick, $d, $t, $u, $sym, $k);
 while (<>) {
     next unless /35=W/;
     #print $_;
-    ($d, $t, $u, $sym) = ($_ =~ /^(.{10}) (.{12}).+?56=(.+?)\x01.*?55=(\w{6})/);
+    ($d, $t, $u, $sym) = ($_ =~ /^(.{10}) (.{8}).+?56=(.+?)\x01.*?55=(\w{6})/);
     # truncate all ids to 20 chars
     $u = substr($u, 0, 20);
     $k = "$u $sym $t";
@@ -20,16 +20,15 @@ while (<>) {
 
 # analysis phase
 my $sym0 = "";
-my $t0 = 0;
-my ($gap, $h, $m, $s, $ms, $tx);
+my $sec0 = 0;
+my ($gap, $h, $m, $s, $ms, $sec);
 foreach my $k (sort keys %tick) {
     ($u, $sym, $t) = split / /, $k;
     ($h, $m, $s) = split /:/, $t;
-    ($s, $ms) = split /,/, $s;
-    $tx = ($h * 60 * 60 * 1000) + ($m * 60 * 1000) + ($s * 1000) + $ms;
-    $gap = $sym eq $sym0 ? $tx - $t0 : 0;
-    print "$u $sym $h:$m:$s $tick{$k} $gap\n" if $gap > 2000;
+    $sec = ($h * 60 * 60) + ($m * 60) + $s;
+    $gap = $sym eq $sym0 ? $sec - $sec0 : 0;
+    print "$k $tick{$k} $gap\n" if $gap > 2;
     $sym0 = $sym;
-    $t0 = $tx;
+    $sec0 = $sec;
 }
 
